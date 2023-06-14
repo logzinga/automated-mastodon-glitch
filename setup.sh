@@ -21,3 +21,7 @@ clear
 #git clone https://github.com/rbenv/ruby-build.git /home/mastodon/.rbenv/plugins/ruby-build
 #chown -hR mastodon:mastodon /home/mastodon/.rbenv/plugins/ruby-build
 
+clear
+echo "Initialising PostgreSQL"
+su - postgres -c "initdb -D '/var/lib/postgres/data'" # not sure if locales are supposed to be there but whatever
+systemctl enable --now postgresql.service
