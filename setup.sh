@@ -3,7 +3,7 @@
 
 clear
 echo "Installing Dependencies"
-pacman -Syu ffmpeg imagemagick libidn libpqxx libxml2 libxslt libyaml nodejs postgresql redis ruby-bundler protobuf yarn zlib base-devel
+pacman -Syu ffmpeg imagemagick libidn libpqxx libxml2 libxslt libyaml nodejs postgresql redis ruby-bundler protobuf yarn zlib base-devel nginx
 
 
 clear
@@ -60,3 +60,7 @@ clear
 echo "Starting and Enabling Systemd"
 systemctl daemon-reload
 systemctl enable --now mastodon-web.service mastodon-sidekiq.service mastodon-streaming.service
+
+clear
+echo "Setting up NGINX"
+cp /home/mastodon/live/dist/nginx.conf /etc/nginx/
