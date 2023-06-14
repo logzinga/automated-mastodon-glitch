@@ -27,8 +27,8 @@ su - postgres -c "initdb -D '/var/lib/postgres/data'" # not sure if locales are 
 systemctl enable --now postgresql.service
 
 clear
-echo "Creating mastodon DB user" # super experimental aaaa
-sudo -l -u postgres psql -c "CREATE USER mastodon CREATEDB; \q"
+echo "Type 'CREATE USER mastodon CREATEDB;' then press enter, once that is done type '\q' then press enter" # automate this!!!!
+sudo -u postgres psql 
 
 clear
 echo "Checking out Code"
@@ -40,6 +40,7 @@ su - mastodon -c "cd live && bundle config deployment 'true'"
 su - mastodon -c "cd live && bundle config without 'development test'"
 su - mastodon -c "cd live && bundle install -j$(getconf _NPROCESSORS_ONLN)"
 su - mastodon -c "cd live && yarn install --pure-lockfile"
+systemctl enable --now redis.service
 
 clear
 echo "The interactive setup will now run, please keep in mind that the script will automatically precompile the assets so make sure to say NO to any precompiling."
@@ -49,4 +50,4 @@ su - mastodon -c "cd live && RAILS_ENV=production bundle exec rake mastodon:setu
 
 clear 
 echo "Precompiling..."
-RAILS_ENV=production --NODE_OPTIONS=--openssl-legacy-provider bundle exec rails assets:precompile
+su - mastodon -c "cd live && RAILS_ENV=production NODE_OPTIONS=--openssl-legacy-provider bundle exec rails assets:precompile"
