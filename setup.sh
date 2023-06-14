@@ -33,3 +33,10 @@ sudo -l -u postgres psql -c "CREATE USER mastodon CREATEDB; \q"
 clear
 echo "Checking out Code"
 su - mastodon -c "git clone https://github.com/glitch-soc/mastodon.git live"
+
+clear
+echo "Installing final dependencies"
+su - mastodon -c "cd live && bundle config deployment 'true'"
+su - mastodon -c "cd live && bundle config without 'development test'"
+su - mastodon -c "cd live && bundle install -j$(getconf _NPROCESSORS_ONLN)"
+su - mastodon -c "cd live && yarn install --pure-lockfile"
