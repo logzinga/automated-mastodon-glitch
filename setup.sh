@@ -26,5 +26,10 @@ echo "Initialising PostgreSQL"
 su - postgres -c "initdb -D '/var/lib/postgres/data'" # not sure if locales are supposed to be there but whatever
 systemctl enable --now postgresql.service
 
+clear
 echo "Creating mastodon DB user" # super experimental aaaa
-sudo -u postgres psql -c "CREATE USER mastodon CREATEDB; \q"
+sudo -l -u postgres psql -c "CREATE USER mastodon CREATEDB; \q"
+
+clear
+echo "Checking out Code"
+su - mastodon -c "git clone https://github.com/glitch-soc/mastodon.git live"
