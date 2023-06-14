@@ -51,3 +51,12 @@ su - mastodon -c "cd live && RAILS_ENV=production bundle exec rake mastodon:setu
 clear 
 echo "Precompiling..."
 su - mastodon -c "cd live && RAILS_ENV=production NODE_OPTIONS=--openssl-legacy-provider bundle exec rails assets:precompile"
+
+clear 
+echo "Copying systemd Units"
+cp /home/mastodon/live/dist/mastodon-*.service /etc/systemd/system
+
+clear
+echo "Starting and Enabling Systemd"
+systemctl daemon-reload
+systemctl enable --now mastodon-web.service mastodon-sidekiq.service mastodon-streaming.service
