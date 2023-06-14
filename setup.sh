@@ -64,3 +64,8 @@ systemctl enable --now mastodon-web.service mastodon-sidekiq.service mastodon-st
 clear
 echo "Setting up NGINX"
 cp /home/mastodon/live/dist/nginx.conf /etc/nginx/
+
+clear
+echo "Now, find 'example.com' and replace it with your domain name that you said in the interactive configuration."
+sleep 15
+nano /etc/nginx/nginx.conf
