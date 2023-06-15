@@ -1,6 +1,9 @@
 # script written by logzinga, feel free to modify to fit your needs
 # this script is intended to be run with root
 
+cd ~
+git clone https://github.com/logzinga/automated-mastodon-glitch # for nginx configuration file locations, might not be located in the right spot by default
+
 clear
 echo "Installing Dependencies"
 pacman -Syu ffmpeg imagemagick libidn libpqxx libxml2 libxslt libyaml nodejs postgresql redis ruby-bundler protobuf yarn zlib base-devel nginx nano
@@ -45,7 +48,6 @@ systemctl enable --now redis.service
 clear
 echo "The interactive setup will now run, please keep in mind that the script will automatically precompile the assets so make sure to say NO to any precompiling."
 sleep 15
-
 su - mastodon -c "cd live && RAILS_ENV=production bundle exec rake mastodon:setup"
 
 clear 
@@ -63,7 +65,10 @@ systemctl enable --now mastodon-web.service mastodon-sidekiq.service mastodon-st
 
 clear
 echo "Setting up NGINX"
-cp /home/mastodon/live/dist/nginx.conf /etc/nginx/
+mkdir /etc/nginx/sites-available
+mkdir /etc/nginx/sites-enabled
+cp /home/mastodon/live/dist/nginx.conf /etc/nginx/sites-available/mastodon
+cp ~/automated-mastodon-glitch/config/nginx.conf /etc/nginx/nginx.conf
 
 clear
 echo "Now, find 'example.com' and replace it with your domain name that you said in the interactive configuration."
