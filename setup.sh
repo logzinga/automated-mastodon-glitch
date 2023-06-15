@@ -69,6 +69,7 @@ mkdir /etc/nginx/sites-available
 mkdir /etc/nginx/sites-enabled
 cp /home/mastodon/live/dist/nginx.conf /etc/nginx/sites-available/mastodon
 cp ~/automated-mastodon-glitch/config/nginx.conf /etc/nginx/nginx.conf
+ln -s /etc/nginx/sites-available/mastodon /etc/nginx/sites-enabled/mastodon
 
 clear
 echo "Now, find 'example.com' and replace it with your domain name that you said in the interactive configuration."
